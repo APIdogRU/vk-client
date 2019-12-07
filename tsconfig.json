@@ -5,14 +5,20 @@
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"moduleResolution": "node",
+		"declaration": true,
+		"declarationDir": "./dist",
 		"sourceMap": false,
-		"outDir": "build",
-		"baseUrl": "."
+		"outDir": "./dist"
+	},
+	"typedocOptions": {
+		"mode": "modules",
+		"out": "docs"
 	},
 	"include": [
 		"src/**/*"
 	],
 	"exclude": [
-		"node_modules/*"
+		"node_modules",
+		"dist"
 	]
 }

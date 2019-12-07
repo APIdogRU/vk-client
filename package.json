@@ -1,12 +1,17 @@
 {
   "name": "@apidog/vk-client",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Client for making requests to VK API for APIdog",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
-    "start": "npx tsc && node build/index.js",
-    "build": "npx tsc",
+    "start": "npx tsc && node dist/index.js",
+    "prepare": "npm run build",
+    "build": "tsc",
     "test": "jest"
   },
   "repository": {
@@ -22,6 +27,7 @@
     "url": "https://github.com/APIdogRU/vk-client/issues"
   },
   "homepage": "https://github.com/APIdogRU/vk-client#readme",
+  "dependencies": {},
   "devDependencies": {
     "@apidog/vk-typings": "0.1.2",
     "@types/jest": "24.0.23",
