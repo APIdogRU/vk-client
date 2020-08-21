@@ -1,4 +1,3 @@
-import {} from 'jest';
 import { request } from '../src/request';
 
 describe('Make request', () => {

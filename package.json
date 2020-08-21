@@ -29,11 +29,11 @@
   "homepage": "https://github.com/APIdogRU/vk-client#readme",
   "dependencies": {},
   "devDependencies": {
-    "@apidog/vk-typings": "0.1.2",
-    "@types/jest": "24.0.23",
-    "@types/node": "12.12.14",
-    "jest": "24.9.0",
-    "ts-jest": "24.2.0",
-    "typescript": "3.7.3"
+    "@apidog/vk-typings": "git@github.com:APIdogRU/vk-typings.git",
+    "@types/jest": "26.0.10",
+    "@types/node": "14.6.0",
+    "jest": "26.4.1",
+    "ts-jest": "26.2.0",
+    "typescript": "3.9.7"
   }
 }

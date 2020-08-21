@@ -1,6 +1,6 @@
 import {} from 'jest';
 import { VKAPIClient } from '../src';
-import { IVKUser } from '@apidog/vk-typings';
+import { IUser } from '@apidog/vk-typings';
 
 const token = process.env.VK_TOKEN;
 
@@ -8,7 +8,7 @@ describe('Make request to VK', () => {
     it('should return info about Durov at users.get with user_ids=1 ', async done => {
         const client = VKAPIClient.getInstance(token);
 
-        const response = await client.perform<IVKUser[]>('users.get', {
+        const response = await client.perform<IUser[]>('users.get', {
             user_ids: '1',
             lang: 'ru'
         });
@@ -45,7 +45,7 @@ describe('Make request to VK', () => {
     it('should replace userIds to user_ids and [1,23048942] to string \'1,23048942\'', async done => {
         const client = VKAPIClient.getInstance(token);
 
-        const users = await client.perform<IVKUser[]>('users.get', {
+        const users = await client.perform<IUser[]>('users.get', {
             userIds: [1, 23048942],
             nameCase: 'dat',
             lang: 'ru'

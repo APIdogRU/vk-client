@@ -1,9 +1,8 @@
-import { IVKApiError, IVKApiResponse } from '@apidog/vk-typings';
+import { IApiError, IApiResponse } from '@apidog/vk-typings';
 import { request } from './request';
 import { stringify } from 'querystring';
 
-type IVKApiResult<T> = IVKApiResponse<T> | IVKApiError;
-type TParamsAcceptableTypes = string | number | string[] | number[] | boolean;
+type IApiParam = string | number | string[] | number[] | boolean;
 
 export interface IVKAPIClientConfig {
     userAgent?: string;
@@ -25,7 +24,7 @@ export class VKAPIClient {
         config.v = config.v || VKAPIClient.defaultConfig.v;
     };
 
-    private convertParams = (params: Record<string, TParamsAcceptableTypes>): Record<string, string> => {
+    private convertParams = (params: Record<string, IApiParam>): Record<string, string> => {
         const result: Record<string, string> = {};
 
         Object.keys(params).forEach(key => {
@@ -43,7 +42,7 @@ export class VKAPIClient {
         return result;
     };
 
-    public perform = async<T>(method: string, params: Record<string, TParamsAcceptableTypes> = {}): Promise<T> => {
+    public perform = async<T>(method: string, params: Record<string, IApiParam> = {}): Promise<T> => {
         if (!params.v && this.config.v) {
             params.v = this.config.v;
         }
@@ -53,7 +52,7 @@ export class VKAPIClient {
         const qs = stringify(params);
         const url = `https://api.vk.com/method/${method}?${qs}`;
 
-        const result = await request<IVKApiResult<T>>({
+        const result = await request<IApiResponse<T> | IApiError>({
             url,
             params: this.convertParams(params),
             headers: {
