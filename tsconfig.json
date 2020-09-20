@@ -11,7 +11,6 @@
 		"outDir": "./dist"
 	},
 	"typedocOptions": {
-		"mode": "modules",
 		"out": "docs"
 	},
 	"include": [
@@ -19,6 +18,7 @@
 	],
 	"exclude": [
 		"node_modules",
-		"dist"
+		"dist",
+		"*.test.ts"
 	]
 }

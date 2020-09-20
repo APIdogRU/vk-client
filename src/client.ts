@@ -3,28 +3,28 @@ import { request } from './request';
 import { stringify } from 'querystring';
 
 type IApiParam = string | number | string[] | number[] | boolean;
+type IApiParamMap = Record<string, IApiParam>;
 
 export interface IVKAPIClientConfig {
     userAgent?: string;
     v?: string;
+    baseDomain?: string;
 }
 
 export class VKAPIClient {
-    static getInstance = (token: string, config?: IVKAPIClientConfig) => {
-        return new VKAPIClient(token, config);
-    };
-
-    private static defaultConfig = {
+    private static defaultConfig: IVKAPIClientConfig = {
         userAgent: 'VKAndroidApp/5.38-816 (Android 8.0; SDK 26; x86; Google Nexus 5X; ru)',
-        v: '5.108'
+        v: '5.119',
+        baseDomain: '',
     };
 
-    private constructor(private readonly token: string, private readonly config: IVKAPIClientConfig = VKAPIClient.defaultConfig) {
-        config.userAgent = config.userAgent || VKAPIClient.defaultConfig.userAgent;
-        config.v = config.v || VKAPIClient.defaultConfig.v;
+    private readonly config: IVKAPIClientConfig;
+
+    public constructor(private readonly token: string, config: IVKAPIClientConfig = {}) {
+        this.config = Object.assign({}, VKAPIClient.defaultConfig, config);
     };
 
-    private convertParams = (params: Record<string, IApiParam>): Record<string, string> => {
+    private convertParams = (params: IApiParamMap): Record<string, string> => {
         const result: Record<string, string> = {};
 
         Object.keys(params).forEach(key => {
@@ -42,7 +42,7 @@ export class VKAPIClient {
         return result;
     };
 
-    public perform = async<T>(method: string, params: Record<string, IApiParam> = {}): Promise<T> => {
+    public perform = async<T>(method: string, params: IApiParamMap = {}): Promise<T> => {
         if (!params.v && this.config.v) {
             params.v = this.config.v;
         }
@@ -56,8 +56,8 @@ export class VKAPIClient {
             url,
             params: this.convertParams(params),
             headers: {
-                'user-agent': this.config.userAgent
-            }
+                'user-agent': this.config.userAgent,
+            },
         });
 
         if ('error' in result) {

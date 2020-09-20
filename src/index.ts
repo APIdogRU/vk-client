@@ -1,2 +1,3 @@
-export * from './client';
-export * from './request';
+import { VKAPIClient } from './client';
+
+export default VKAPIClient;
