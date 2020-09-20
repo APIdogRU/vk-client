@@ -1,12 +1,11 @@
-import {} from 'jest';
-import { VKAPIClient } from '../src';
+import VKAPIClient from '.';
 import { IUser } from '@apidog/vk-typings';
 
 const token = process.env.VK_TOKEN;
 
 describe('Make request to VK', () => {
     it('should return info about Durov at users.get with user_ids=1 ', async done => {
-        const client = VKAPIClient.getInstance(token);
+        const client = new VKAPIClient(token);
 
         const response = await client.perform<IUser[]>('users.get', {
             user_ids: '1',
@@ -19,7 +18,7 @@ describe('Make request to VK', () => {
     });
 
     it('should throw error at call captcha.force ', async done => {
-        const client = VKAPIClient.getInstance(token);
+        const client = new VKAPIClient(token);
 
         let throwed = false;
 
@@ -33,17 +32,8 @@ describe('Make request to VK', () => {
         done();
     });
 
-    it('should be typeof city === number (city_id) at change version to 5.1 and call users.get with fields=city ', async done => {
-        const client = VKAPIClient.getInstance(token, { v: '5.1' });
-
-        const [user] = await client.perform('users.get', { user_ids: 1, fields: 'city' });
-
-        expect(typeof user.city).toBe('number');
-        done();
-    });
-
     it('should replace userIds to user_ids and [1,23048942] to string \'1,23048942\'', async done => {
-        const client = VKAPIClient.getInstance(token);
+        const client = new VKAPIClient(token);
 
         const users = await client.perform<IUser[]>('users.get', {
             userIds: [1, 23048942],
